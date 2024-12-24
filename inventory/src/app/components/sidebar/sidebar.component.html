@@ -1,0 +1,56 @@
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidebar -->
+  <mat-sidenav #drawer class="sidenav" fixedInViewport mode="side" closed>
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <button
+        class="mat-list-item"
+        [routerLink]="['/home/inventario']"
+        routerLinkActive="router-link-active"
+      >
+        Inventario
+      </button>
+      <button
+        class="mat-list-item"
+        [routerLink]="['/home/agregar-item']"
+        routerLinkActive="router-link-active"
+      >
+        Agregar Items
+      </button>
+      <button
+        class="mat-list-item"
+        [routerLink]="['/home/modificar-item']"
+        routerLinkActive="router-link-active"
+      >
+        Modificar Item
+      </button>
+      <button
+        class="mat-list-item"
+        [routerLink]="['/home/historial-cambios']"
+        routerLinkActive="router-link-active"
+      >
+        Historial de Cambios
+      </button>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content class="sidenav-content">
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <img src="/assets/logo_new.png" alt="logo" width="50" height="50">
+      <span>Inventario I.E. Pedro Pablo Atusparia</span>
+    </mat-toolbar>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

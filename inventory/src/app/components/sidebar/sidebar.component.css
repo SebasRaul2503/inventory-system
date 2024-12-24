@@ -1,0 +1,92 @@
+/* Sidebar menu items */
+button.mat-list-item {
+  width: 100%;
+  display: block;
+  padding: 12px 16px;
+  font-size: 16px;
+  color: #333;
+  text-align: left;
+  text-transform: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background-color 0.5s, color 1s;
+  border-radius: 4px;
+  margin: auto;
+}
+
+mat-sidenav-container mat-toolbar{
+  background-color:#4f5ff1;
+  color: white
+}
+
+/* Hover effect */
+button.mat-list-item:hover {
+  background-color: #f0f0f0; /* Light hover effect */
+  color: #001aff; /* Highlight text color */
+  font-weight: bold;
+}
+
+.sidenav{
+  width: 200px;
+}
+
+mat-sidenav-content span{
+  margin-left:10px;
+}
+
+mat-sidenav-content button{
+  text-align: center;
+  font-size:25px;
+  background-color:#00000000;
+  transition: background-color 0.5s;
+  color:white;
+  border:none;
+}
+
+mat-sidenav-content button:hover{
+  background-color:#00000025;
+  cursor: pointer;
+}
+
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+  .sidenav {
+    width: 50%; /* Full-width for small screens */
+  }
+
+  button.mat-list-item {
+    padding: 10px 12px; /* Reduce padding */
+    font-size: 14px; /* Adjust font size */
+  }
+
+  mat-sidenav-content span {
+    margin-left: 5px; /* Reduce margin for smaller screens */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+    display: inline-block; /* Ensure it stays inline */
+    max-width: 90%; /* Adjust width to fit the screen */
+  }
+
+  mat-sidenav-content button {
+    font-size: 20px; /* Adjust font size */
+  }
+}
+
+/* Additional adjustments for very small screens */
+@media screen and (max-width: 480px) {
+  button.mat-list-item {
+    padding: 8px 10px; /* Further reduce padding */
+    font-size: 12px; /* Smaller font size for compact view */
+  }
+
+  mat-sidenav-content span {
+    max-width: 80%; /* Further adjust width */
+    font-size: 13px; /* Adjust font size for readability */
+  }
+
+  mat-sidenav-content button {
+    font-size: 18px; /* Smaller font size for buttons */
+  }
+}

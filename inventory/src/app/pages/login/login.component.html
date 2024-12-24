@@ -1,0 +1,32 @@
+<div class="container">
+  <h1>Iniciar Sesion</h1>
+  <p>Ingresa tus datos para acceder al recurso</p>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Usuario"
+        formControlName="username"
+        required
+        pattern="[a-zA-Z0-9]{6,12}"
+      />
+      <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
+        Campo requerido
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Password"
+        formControlName="password"
+        type="password"
+        required
+        pattern="[a-zA-Z0-9]{6,12}"
+      />
+      <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+        Campo requerido
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Login</button>
+  </form>
+</div>
