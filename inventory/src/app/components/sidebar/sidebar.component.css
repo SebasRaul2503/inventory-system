@@ -22,7 +22,7 @@ mat-sidenav-container mat-toolbar{
 
 /* Hover effect */
 button.mat-list-item:hover {
-  background-color: #f0f0f0; /* Light hover effect */
+  background-color: #e0d7d7; /* Light hover effect */
   color: #001aff; /* Highlight text color */
   font-weight: bold;
 }

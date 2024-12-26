@@ -1,10 +1,12 @@
 export interface Item {
     id: number;
-    name: string;
-    description: string;
-    price: number;
-    image: string;
-    category: string;
-    status: string;
-    id_ugel: string;
+    ambiente: string;
+    descripcion: string;
+    categoria: string;
+    detalle: string;
+    fechaAdquisicion: string;
+    precio: number;
+    fechaIngreso: string;
+    imagen: string;
+    estado: string;
 }
