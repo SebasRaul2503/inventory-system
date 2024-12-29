@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db.config");
+const { comparePassword, hashPassword } = require("../utils/encryption");
 
 const SECRET_KEY = process.env.JWT_SECRET;
 
@@ -19,7 +20,7 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Usuario o contraseña incorrecta" });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.PASS);
+    const isPasswordValid = comparePassword(password, user.PASS);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Usuario o contraseña incorrecta" });
     }
@@ -62,7 +63,7 @@ const createUser = async (req, res) => {
   try {
     await connection.beginTransaction();
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await hashPassword(password);
 
     const [userResult] = await connection.query(
       "INSERT INTO USUARIOS (NOMBRES, APELLIDOS, USU, PASS, ROL) VALUES (?, ?, ?, ?, ?)",
