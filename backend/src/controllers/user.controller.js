@@ -16,12 +16,12 @@ const loginUser = async (req, res) => {
 
     const user = rows[0];
     if (!user) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      return res.status(401).json({ message: "Usuario o contraseña incorrecta" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.PASS);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Contraseña incorrecta" });
+      return res.status(401).json({ message: "Usuario o contraseña incorrecta" });
     }
 
     const token = jwt.sign(
@@ -50,19 +50,45 @@ const loginUser = async (req, res) => {
 const createUser = async (req, res) => {
   const { nombres, apellidos, usu, password } = req.body;
 
+  // Extraer userCreating desde el token decodificado
+  const userCreating = req.user?.id;
+  
+  if (!userCreating) {
+    return res.status(403).json({ message: "Acceso denegado: Usuario no autenticado" });
+  }
+
+  const connection = await pool.getConnection();
+
   try {
+    await connection.beginTransaction();
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await pool.query(
+    const [userResult] = await connection.query(
       "INSERT INTO USUARIOS (NOMBRES, APELLIDOS, USU, PASS, ROL) VALUES (?, ?, ?, ?, ?)",
       [nombres, apellidos, usu, hashedPassword, "user"]
     );
 
+    const userId = userResult.insertId;
+
+    const auditDetail = `Usuario creado: ${nombres} ${apellidos} (usuario: ${usu}) por el admin ID: ${userCreating}`;
+
+    await connection.query(
+      "INSERT INTO HISTORIAL_SUCESOS (ID_USUARIO, FECHA_MOVIMIENTO, DETALLE_MOVIMIENTO) VALUES (?, ?, ?)",
+      [userCreating, new Date(), auditDetail]
+    );
+
+    await connection.commit();
+
     res.status(201).json({ message: "Usuario creado exitosamente" });
   } catch (err) {
+    await connection.rollback();
     console.error("Error al crear usuario:", err);
     res.status(500).json({ message: "Error interno del servidor" });
+  } finally {
+    connection.release();
   }
 };
+
 
 module.exports = { loginUser, createUser };

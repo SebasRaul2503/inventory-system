@@ -44,6 +44,22 @@ mat-sidenav-content button{
   border:none;
 }
 
+mat-toolbar{
+  display: flex;
+}
+
+mat-toolbar span {
+  margin-left: 10px;
+}
+
+mat-toolbar .logout-btn {
+  position: absolute;
+  right: 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
 mat-sidenav-content button:hover{
   background-color:#00000025;
   cursor: pointer;
@@ -52,7 +68,7 @@ mat-sidenav-content button:hover{
 /* Responsive styles for smaller screens */
 @media screen and (max-width: 768px) {
   .sidenav {
-    width: 50%; /* Full-width for small screens */
+    width: 30%; /* Full-width for small screens */
   }
 
   button.mat-list-item {
@@ -62,7 +78,7 @@ mat-sidenav-content button:hover{
 
   mat-sidenav-content span {
     margin-left: 5px; /* Reduce margin for smaller screens */
-    white-space: nowrap; /* Prevent text wrapping */
+    white-space: normal ; /* Prevent text wrapping */
     overflow: hidden; /* Hide overflowing text */
     text-overflow: ellipsis; /* Add ellipsis for overflowing text */
     display: inline-block; /* Ensure it stays inline */
@@ -71,6 +87,10 @@ mat-sidenav-content button:hover{
 
   mat-sidenav-content button {
     font-size: 20px; /* Adjust font size */
+  }
+
+  mat-sidenav-content .logout-btn {
+    font-size: 10px;
   }
 }
 
@@ -84,6 +104,10 @@ mat-sidenav-content button:hover{
   mat-sidenav-content span {
     max-width: 80%; /* Further adjust width */
     font-size: 13px; /* Adjust font size for readability */
+    white-space: normal; /* Prevent text wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
   }
 
   mat-sidenav-content button {

@@ -13,7 +13,8 @@ const getItems = async (req, res) => {
           ITEM.PRECIO AS precio,
           ITEM.FECHA_INGRESO AS fechaIngreso,
           ITEM.IMAGEN AS imagen,
-          ITEM.ESTADO AS estado
+          ITEM.ESTADO AS estado,
+          ITEM.ID_UGEL AS idUgel
         FROM ITEM
         LEFT JOIN AMBIENTES ON ITEM.ID_AMBIENTE = AMBIENTES.ID_AMBIENTE
         LEFT JOIN DESCRIPCIONES ON ITEM.ID_DESCRIPCION = DESCRIPCIONES.ID_DESCRIPCION
@@ -26,5 +27,76 @@ const getItems = async (req, res) => {
       res.status(500).json({ message: "Error al obtener ítems" });
     }
   };
-  
-  module.exports = { getItems };
+
+  const addItem = async (req, res) => {
+    const { item, itemQuantity, userId } = req.body;
+
+    const connection = await pool.getConnection();
+
+    try {
+        await connection.beginTransaction();
+
+        const insertItemQuery = `
+          INSERT INTO ITEM (
+            ID_AMBIENTE,
+            ID_DESCRIPCION,
+            DETALLE,
+            ID_CATEGORIA,
+            ID_UGEL,
+            FECHA_ADQUISICION,
+            PRECIO,
+            FECHA_INGRESO,
+            IMAGEN,
+            ESTADO
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        `;
+
+        const insertAuditQuery = `
+          INSERT INTO HISTORIAL_SUCESOS (
+            ID_ELEMENTO,
+            ID_USUARIO,
+            FECHA_MOVIMIENTO,
+            DETALLE_MOVIMIENTO
+          ) VALUES (?, ?, ?, ?);
+        `;
+
+        for (let i = 0; i < itemQuantity; i++) {
+            // Insert item
+            const [itemResult] = await connection.query(insertItemQuery, [
+                item.idAmbiente,
+                item.idDescripcion,
+                item.detalle,
+                item.idcategoria,
+                item.idUgel,
+                item.fechaAdquisicion,
+                item.precio,
+                new Date(), // Current timestamp
+                item.imagen,
+                item.estado
+            ]);
+
+            const itemId = itemResult.insertId;
+
+            // Insert audit record
+            const auditDetail = `Usuario de ID ${userId} creó el ítem: ${item.detalle}`;
+            await connection.query(insertAuditQuery, [
+                itemId,
+                userId,
+                new Date(), // Current timestamp
+                auditDetail
+            ]);
+        }
+
+        await connection.commit();
+
+        res.status(201).json({ message: "Ítems agregados con éxito" });
+    } catch (err) {
+        await connection.rollback();
+        console.error("Error al agregar ítems:", err);
+        res.status(500).json({ message: "Error al agregar ítems" });
+    } finally {
+        connection.release();
+    }
+};
+
+  module.exports = { getItems, addItem };

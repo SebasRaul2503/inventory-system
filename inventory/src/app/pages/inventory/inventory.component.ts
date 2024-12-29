@@ -21,10 +21,7 @@ export class InventoryComponent {
     month: 'long',
     year: "numeric",
   }).format(new Date());
-  
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
 
   constructor(private apiRestService: ApiRestService) { }
 
@@ -38,7 +35,7 @@ export class InventoryComponent {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
       });
-    }catch (error) {
+    } catch (error) {
       console.log("xs");
     }
   }

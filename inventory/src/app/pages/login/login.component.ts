@@ -49,7 +49,7 @@ export class LoginComponent {
     this.authservice.login(this.userLogin).subscribe(
       (response) => {
         console.log('login success');
-        sessionStorage.setItem('token', response.token);
+        this.authservice.setToken(response.token);
         this.router.navigate(['/home/inventario']);
       },
       error => {
