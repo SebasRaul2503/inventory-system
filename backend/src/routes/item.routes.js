@@ -7,7 +7,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/items/getItems:
+ * /items/getItems:
  *   get:
  *     summary: Obtener todos los ítems
  *     tags:
@@ -72,7 +72,7 @@ router.get("/getItems", verifyToken, getItems);
 
 /**
  * @swagger
- * /api/items/addItem:
+ * /items/addItem:
  *   post:
  *     summary: Agregar nuevos ítems
  *     tags:

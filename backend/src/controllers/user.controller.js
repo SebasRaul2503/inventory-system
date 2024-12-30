@@ -1,4 +1,3 @@
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db.config");
 const { comparePassword, hashPassword } = require("../utils/encryption");
@@ -20,7 +19,7 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Usuario o contraseña incorrecta" });
     }
 
-    const isPasswordValid = comparePassword(password, user.PASS);
+    const isPasswordValid = await comparePassword(password, user.PASS);
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Usuario o contraseña incorrecta" });
     }

@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/audit/getAudits:
+ * /audit/getAudits:
  *   get:
  *     summary: Obtener registros de auditoría
  *     tags:

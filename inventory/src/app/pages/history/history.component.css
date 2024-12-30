@@ -29,3 +29,8 @@
 .hidden {
   display: none !important; /* Ocultar el contenedor cuando la clase "hidden" está activa */
 }
+
+h1 {
+  text-align: center;
+  padding-top: 10px;
+}

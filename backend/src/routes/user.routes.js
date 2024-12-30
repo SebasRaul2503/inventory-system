@@ -1,3 +1,4 @@
+
 const express = require("express");
 const { loginUser, createUser } = require("../controllers/user.controller");
 const { verifyToken, isAdmin } = require("../middlewares/auth.middleware");
@@ -6,7 +7,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/users/login:
+ * /users/login:
  *   post:
  *     summary: Iniciar sesión para obtener un token JWT
  *     tags:
@@ -62,7 +63,7 @@ router.post("/login", loginUser);
 
 /**
  * @swagger
- * /api/users/crearUsuario:
+ * /users/crearUsuario:
  *   post:
  *     summary: Crear un nuevo usuario (solo para admins)
  *     tags:
