@@ -1,2 +1,12 @@
 # Ignorar todas las carpetas node_modules
 **/node_modules/
+
+# Ignorar archivos de logs
+*.log
+
+# Ignorar archivos de cache
+.cache
+
+# Ignorar archivos de archivos de configuracion
+.env
+
