@@ -27,13 +27,48 @@ export class ApiRestService {
       );
   }
 
-  addItem(Item: Item, itemQuantity: Number, userId: Number, token: String) {
+  addItem(Item: Item, itemQuantity: Number) {
+    const token = this.authService.getToken();
     const headers = { Authorization: `Bearer ${token}` };
-    return this.http.post<{ item: Item }>(`${this.baseUrl}/api/items/addItem`, { item: Item, itemQuantity, userId }, { headers });
+    return this.http.post<{ item: Item }>(`${this.baseUrl}/api/items/addItem`, { item: Item, itemQuantity }, { headers });
   }
 
+  getCategorias() {
+    const token = this.authService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get<{ categorias: any[] }>(`${this.baseUrl}/api/list/getCategorias`, { headers })
+    .pipe(
+        map((response) => response.categorias) // Extraemos solo el arreglo de ítems
+      );
+}
 
+getDescripciones() {
+    const token = this.authService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get<{ descripciones: any[] }>(`${this.baseUrl}/api/list/getDescripciones`, { headers })
+    .pipe(
+        map((response) => response.descripciones) // Extraemos solo el arreglo de ítems
+      );
+}
 
+getAmbientes() {
+    const token = this.authService.getToken();
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get<{ ambientes: any[] }>(`${this.baseUrl}/api/list/getAmbientes`, { headers })
+    .pipe(
+        map((response) => response.ambientes) // Extraemos solo el arreglo de ítems
+      );
+}
+
+getItemById(id: string) {
+  const token = this.authService.getToken();
+  const headers = { Authorization: `Bearer ${token}` };
+  return this.http
+    .get<{ item: Item[] }>(`${this.baseUrl}/api/items/getItemById/${id}`, { headers })
+    .pipe(
+      map((response) => response.item[0]) // Tomamos el primer elemento del arreglo
+    );
+}
 
 
   getAudits() {

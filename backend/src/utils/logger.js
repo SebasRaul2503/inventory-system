@@ -1,18 +1,17 @@
-const { createLogger, format, transports } = require('winston');
+const { createLogger, format, transports } = require("winston");
 
-// Crear un logger personalizado
 const logger = createLogger({
-  level: 'info', // Nivel por defecto
+  level: "info", // default level
   format: format.combine(
-    format.timestamp(), // Agregar marca de tiempo
+    format.timestamp(), // timestamp
     format.printf(({ timestamp, level, message }) => {
       return `${timestamp} [${level.toUpperCase()}]: ${message}`;
     })
   ),
   transports: [
-    new transports.Console(), // Mostrar logs en la consola
-    new transports.File({ filename: 'logs/app.log' }) // Guardar logs en un archivo
-  ]
+    new transports.Console(), // logs to console
+    new transports.File({ filename: "logs/app.log" }), // saves logs in a file
+  ],
 });
 
 module.exports = logger;

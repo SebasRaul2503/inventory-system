@@ -1,4 +1,3 @@
-
 const express = require("express");
 const { loginUser, createUser } = require("../controllers/user.controller");
 const { verifyToken, isAdmin } = require("../middlewares/auth.middleware");

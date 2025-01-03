@@ -10,7 +10,7 @@ const router = express.Router();
  *   get:
  *     summary: Obtener registros de auditoría
  *     tags:
- *       - Auditoría
+ *       - Auditoria
  *     security:
  *       - bearerAuth: [] # Requiere autenticación con token JWT
  *     responses:

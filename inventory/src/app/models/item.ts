@@ -1,16 +1,16 @@
 export interface Item {
     id?: number | null;
-    ambiente: string;
+    ambiente?: string | null;
     idAmbiente?: number | null;
-    descripcion: string;
+    descripcion?: string | null;
     idDescripcion?: number | null;
-    detalle: string;
-    categoria: string;
+    detalle?: string | null;
+    categoria?: string | null;
     idCategoria?: number | null;
     idUgel?: number | null;
     fechaAdquisicion?: string | null;
-    precio: number;
-    fechaIngreso: string;
+    precio?: number | null;
+    fechaIngreso?: string | null;
     imagen?: string | null;
-    estado: string;
+    estado?: string | null;
 }

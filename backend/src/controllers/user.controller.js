@@ -9,19 +9,22 @@ const loginUser = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const [rows] = await pool.query(
-      "SELECT * FROM USUARIOS WHERE USU = ?",
-      [username]
-    );
+    const [rows] = await pool.query("SELECT * FROM USUARIOS WHERE USU = ?", [
+      username,
+    ]);
 
     const user = rows[0];
     if (!user) {
-      return res.status(401).json({ message: "Usuario o contraseña incorrecta" });
+      return res
+        .status(401)
+        .json({ message: "Usuario o contraseña incorrecta" });
     }
 
     const isPasswordValid = await comparePassword(password, user.PASS);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Usuario o contraseña incorrecta" });
+      return res
+        .status(401)
+        .json({ message: "Usuario o contraseña incorrecta" });
     }
 
     const token = jwt.sign(
@@ -52,9 +55,11 @@ const createUser = async (req, res) => {
 
   // Extraer userCreating desde el token decodificado
   const userCreating = req.user?.id;
-  
+
   if (!userCreating) {
-    return res.status(403).json({ message: "Acceso denegado: Usuario no autenticado" });
+    return res
+      .status(403)
+      .json({ message: "Acceso denegado: Usuario no autenticado" });
   }
 
   const connection = await pool.getConnection();
@@ -89,6 +94,5 @@ const createUser = async (req, res) => {
     connection.release();
   }
 };
-
 
 module.exports = { loginUser, createUser };

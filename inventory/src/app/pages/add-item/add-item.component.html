@@ -1,35 +1,125 @@
 <div class="container">
-  <h1>Agregar item</h1>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Agregar item</mat-card-title>
-    </mat-card-header>
+  <mat-card class="form-card">
+    <mat-card-title class="card-title">Agregar Ítem</mat-card-title>
     <mat-card-content>
-      <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Descripcion"
-            formControlName="descripcion"
-          />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Categoria" formControlName="categoria" />
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Precio"
-            formControlName="precio"
-            type="number"
-            min="0"
-            step="0.01"
-          />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Ambiente" formControlName="ambiente" />
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Agregar</button>
+      <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()" class="form-content">
+        
+        <div class="form-row">
+          <mat-form-field class="form-field">
+            <mat-label>Categoría</mat-label>
+            <mat-select formControlName="idCategoria">
+              <mat-option *ngFor="let categoria of categorias" [value]="categoria.ID_CATEGORIA">
+                {{ categoria.NOMBRE_CATEGORIA }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="addItemForm.get('idCategoria')?.hasError('required')">
+              Seleccione una categoría.
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field class="form-field">
+            <mat-label>Descripción</mat-label>
+            <mat-select formControlName="idDescripcion">
+              <mat-option *ngFor="let descripcion of descripcionesFiltradas" [value]="descripcion.ID_DESCRIPCION">
+                {{ descripcion.NOMBRE_DESCRIPCION }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="addItemForm.get('idDescripcion')?.hasError('required')">
+              Seleccione una descripción.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="form-field">
+            <mat-label>ID del ambiente</mat-label>
+            <mat-select formControlName="idAmbiente">
+              <mat-option *ngFor="let ambiente of ambientes" [value]="ambiente.ID_AMBIENTE">
+                {{ ambiente.NOMBRE_AMBIENTE }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="addItemForm.get('idAmbiente')?.hasError('required')">
+              Seleccione un ambiente.
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field class="form-field">
+            <mat-label>Detalle del Ítem</mat-label>
+            <textarea matInput formControlName="detalle" rows="4"></textarea>
+            <mat-error *ngIf="addItemForm.get('detalle')?.hasError('required')">
+              El detalle es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="form-field">
+            <mat-label>Precio</mat-label>
+            <input matInput type="number" formControlName="precio" />
+            <mat-error *ngIf="addItemForm.get('precio')?.hasError('required')">
+              El precio es obligatorio.
+            </mat-error>
+            <mat-error *ngIf="addItemForm.get('precio')?.hasError('min')">
+              El precio debe ser mayor que cero.
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field class="form-field">
+            <mat-label>Fecha de adquisición</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fechaAdquisicion" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="addItemForm.get('fechaAdquisicion')?.hasError('required')">
+              La fecha de adquisición es obligatoria.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="form-field">
+            <mat-label>Imagen</mat-label>
+            <input matInput type="text" formControlName="imagen" />
+            <mat-error *ngIf="addItemForm.get('imagen')?.hasError('required')">
+              La URL de la imagen es obligatoria.
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field class="form-field">
+            <mat-label>Estado</mat-label>
+            <input matInput type="text" formControlName="estado" />
+            <mat-error *ngIf="addItemForm.get('estado')?.hasError('required')">
+              El estado es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="form-field">
+            <mat-label>ID de la UGEL</mat-label>
+            <input matInput type="number" formControlName="idUgel" />
+            <mat-error *ngIf="addItemForm.get('idUgel')?.hasError('required')">
+              El ID de la UGEL es obligatorio.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="form-field">
+            <mat-label>Cantidad de Ítems</mat-label>
+            <input matInput type="number" formControlName="itemQuantity" min="1" max="100" />
+            <mat-error *ngIf="addItemForm.get('itemQuantity')?.hasError('required')">
+              La cantidad es obligatoria.
+            </mat-error>
+            <mat-error *ngIf="addItemForm.get('itemQuantity')?.hasError('min')">
+              La cantidad mínima es 1.
+            </mat-error>
+            <mat-error *ngIf="addItemForm.get('itemQuantity')?.hasError('max')">
+              La cantidad máxima es 100.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="addItemForm.invalid">Agregar</button>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>

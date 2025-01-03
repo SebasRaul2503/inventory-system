@@ -1,0 +1,24 @@
+<!-- item using item-detail component and angular material -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Detalle del ítem</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Información del ítem</h4>
+                <p>ID: {{id}}</p>
+                <p>Descripción: {{item.descripcion}}</p>
+                <p>Categoria: {{item.categoria}}</p>
+                <p>Precio: {{item.precio}}</p>
+                <p>Estado: {{item.estado}}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>  
+  </div>

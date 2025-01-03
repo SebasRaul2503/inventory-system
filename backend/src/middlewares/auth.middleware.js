@@ -6,7 +6,7 @@ const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"]?.split(" ")[1]; // "Bearer <token>"
 
   if (!token) {
-    return res.status(403).json({ message: "Token no proporcionado" });
+    return res.status(403).json({ message: "Acceso denegado" });
   }
 
   try {
@@ -15,14 +15,14 @@ const verifyToken = (req, res, next) => {
     next();
   } catch (err) {
     console.error("Error al verificar el token:", err);
-    res.status(401).json({ message: "Token inválido o expirado" });
+    res.status(401).json({ message: "No autorizado" });
   }
 };
 
 
 const isAdmin = (req, res, next) => {
   if (req.user?.rol !== "admin") {
-    return res.status(403).json({ message: "Acceso denegado: No eres administrador" });
+    return res.status(403).json({ message: "Acceso denegado" });
   }
   next();
 };

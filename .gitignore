@@ -2,7 +2,7 @@
 **/node_modules/
 
 # Ignorar archivos de logs
-*.log
+**/.log
 
 # Ignorar archivos de cache
 .cache
